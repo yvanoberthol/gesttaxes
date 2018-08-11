@@ -1,0 +1,48 @@
+<div class="row" ng-controller="taxeController">
+    <div class="panel panel-primary">
+        <div class="panel panel-heading">Liste des taxes</div>
+        <div class="panel panel-body">
+            <div class="form-group form-inline">
+                <label class="control-label"><strong>Taxes par entreprise</strong></label>
+                <!--<input type=text class="form-control text-center" name="code">-->
+                <select ng-model="motcle" class="form-control text-center">
+                    <option ng-repeat="entreprise in listeEntreprises"  value="{{entreprise.code}}">{{entreprise.nom}}</option>
+                </select>
+                <button type="button" ng-click="listeTaxesParEntreprise()" class="form-control btn btn-primary">Chercher</button>
+            </div>
+            <table class="table table-striped">
+                <tr>
+                    <th>ID</th>
+                    <th>Titre</th>
+                    <th>Date</th>
+                    <th>Montant</th>
+                    <th>Type</th>
+                    <th colspan="2">Actions</th>
+                </tr>
+                <tr ng-repeat="taxe in pageTaxes.content">
+                    <td>{{taxe.id}}</td>
+                    <td>{{taxe.titre}}</td>
+                    <td>{{taxe.dateTaxe}}</td>
+                    <td>{{taxe.montant}}</td>
+                    <td>{{taxe.type}}</td>
+                    <td>
+                        <button class="btn btn-info">Modifier</button>
+                    </td>
+                    <td>
+                        <button class="btn btn-danger">Supprimer</button>
+                    </td>
+                </tr>
+            </table>
+            <div>
+                <ul class="nav nav-pills">
+                    <li ng-class="{'active':$index ==pageCourante}" ng-repeat="p in pages track by $index">
+                        <a ng-click="gotopageParEntreprise($index)">{{$index +1}}</a>
+                    </li>
+                    <!--                    <li>
+                                            <a th:href="@{/taxes}">rechercher les taxes d'une entreprise</a>
+                                        </li>-->
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

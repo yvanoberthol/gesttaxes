@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="template">
+<head>
+    <meta charset="UTF-8">
+    <!--<link rel="stylesheet" href="css/bootstrap.css">-->
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
+    <title>Liste des taxes</title>
+</head>
+<body>
+<div class="container">
+    <div class="row" layout:fragment="content">
+        <div class="panel panel-primary">
+            <div class="panel panel-heading">Liste des taxes</div>
+            <div class="panel panel-body">
+                <form th:action="@{/taxes}" method="get">
+                    <div class="form-group form-inline">
+                        <label class="control-label"><strong>Taxes par entreprise</strong></label>
+                        <!--<input type=text class="form-control text-center" name="code">-->
+                        <select name="code" class="form-control text-center">
+                            <option th:each="e:${entreprises}" th:value="${e.code}" th:text="${e.nom}"></option>
+                        </select>
+                        <button type="submit" class="form-control btn btn-primary">Chercher</button>
+                    </div>
+                </form>
+                <table class="table table-striped">
+                    <tr>
+                        <th>ID</th>
+                        <th>Titre</th>
+                        <th>Date</th>
+                        <th>Montant</th>
+                        <th>Type</th>
+                        <th colspan="2">Actions</th>
+                    </tr>
+                    <tr th:each="t:${listeTaxes}">
+                        <td th:text="${t.id}"></td>
+                        <td th:text="${t.titre}"></td>
+                        <td th:text="${t.dateTaxe}"></td>
+                        <td th:text="${t.montant}"></td>
+                        <td th:text="${t.class.simpleName}"></td>
+                        <td>
+                            <button class="btn btn-info">Modifier</button>
+                        </td>
+                        <td>
+                            <button class="btn btn-danger">Supprimer</button>
+                        </td>
+                    </tr>
+                </table>
+                <div>
+                    <ul class="nav nav-pills">
+                        <li th:class="${status.index == pageCourante}? 'active': ''" th:each="p,status:${pages}">
+                            <a th:href="@{/taxes(code=${code},page=${status.index})}" th:text="${status.index+1}"></a>
+                        </li>
+                        <li>
+                            <a th:href="@{/alltaxes}">Toutes les taxes</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

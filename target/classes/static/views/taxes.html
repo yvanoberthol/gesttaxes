@@ -1,0 +1,53 @@
+<div class="row" ng-controller="taxeController">
+    <div class="panel panel-primary">
+        <div class="panel panel-heading">Liste des taxes</div>
+        <div class="panel panel-body">
+                <label class="control-label"><strong>Taxes par entreprise</strong></label>
+                <!--<input type=text class="form-control text-center" name="code">-->
+                <select ng-model="motcle" class="form-control text-center">
+                    <option ng-repeat="entreprise in listeEntreprises"  value="{{entreprise.nom}}">{{entreprise.nom}}</option>
+                </select>
+                <button type="button" ng-click="listerallTaxes()" class="form-control btn btn-primary">Chercher</button>
+            </div>
+            <table class="table table-striped">
+                <tr>
+                    <th>ID</th>
+                    <th>Titre</th>
+                    <th>Date</th>
+                    <th>Montant</th>
+                    <th>Type</th>
+                    <th colspan="2">Actions</th>
+                </tr>
+                <tr ng-repeat="taxe in pageTaxes.content">
+                    <td>{{taxe.id}}</td>
+                    <td>{{taxe.titre}}</td>
+                    <td>{{taxe.dateTaxe}}</td>
+                    <td>{{taxe.montant}}</td>
+                    <td>{{taxe.type}}</td>
+                    <td>
+                        <button class="btn btn-info">Modifier</button>
+                    </td>
+                    <td>
+                        <button class="btn btn-danger">Supprimer</button>
+                    </td>
+                </tr>
+            </table>
+        <div class="navbar-collapse">
+            <ul class="nav nav-pills navbar-nav">
+                <li ng-class="{'active': pageCourante == $index}" ng-repeat="p in pages track by $index">
+                    <a ng-click="gotopage($index)">{{$index+1}}</a>
+                </li>
+                <!-- <li>
+                     <a th:href="@{/entreprises}">Toutes les entreprises</a>
+                 </li>-->
+            </ul>
+            <ul class="nav nav-pills navbar-nav navbar-right">
+                <li ng-class="{'active': size == 3}"><a ng-click="resize(3)">3</a></li>
+                <li ng-class="{'active': size == 5}"><a ng-click="resize(5)">5</a></li>
+                <li ng-class="{'active': size == 8}"><a ng-click="resize(8)">8</a></li>
+                <li ng-class="{'active': size == 10}"><a ng-click="resize(10)">10</a></li>
+            </ul>
+        </div>
+        </div>
+    </div>
+</div>

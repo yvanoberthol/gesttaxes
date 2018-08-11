@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="template">
+<head>
+    <meta charset="UTF-8">
+    <title>Ajouter une taxe</title>
+</head>
+<body>
+<div class="row" layout:fragment="content">
+    <div class="col-md-6 col-md-offset-3">
+        <div class="panel panel-primary">
+            <div class="panel panel-heading">Ajout d'une taxe</div>
+            <div class="panel panel-body">
+                <form th:action="@{/ajoutTaxe}" method="post">
+                    <div class="form-group">
+                        <label class="control-label">Titre</label>
+                        <input type="text" name="titre" class="form-control" th:value="${taxe.titre}">
+                        <span class="text-center text-danger" th:errors="${taxe.titre}"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Date</label>
+                        <input type="text" name="dateTaxe" class="form-control" th:value="${taxe.dateTaxe}">
+                        <span class="text-center text-danger" th:errors="${taxe.dateTaxe}"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Montant</label>
+                        <input type="text" name="montant" class="form-control" th:value="${taxe.montant}">
+                        <span class="text-center text-danger" th:errors="${taxe.montant}"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Entreprise</label>
+                        <select name="entreprise" class="form-control text-center">
+                            <option th:each="e:${entreprises}" th:value="${e.code}" th:text="${e.nom}"></option>
+                        </select>
+                        <span class="text-center text-danger" th:errors="${taxe.entreprise}"></span>
+                    </div>
+                    <div class="form-group text-center">
+                        <button type="submit" name="ajouter" class="btn btn-primary">Ajouter</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

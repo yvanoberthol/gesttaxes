@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="template">
+<head>
+    <meta charset="UTF-8">
+    <!--<link rel="stylesheet" href="css/bootstrap.css">-->
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
+    <title>Liste des entreprises</title>
+</head>
+<body>
+<div class="container">
+    <div class="row" layout:fragment="content">
+        <div class="panel panel-primary">
+            <div class="panel panel-heading">Liste des entreprises</div>
+            <div class="panel panel-body">
+                <form th:action="@{/entreprises}" method="get">
+                    <div class="form-group form-inline">
+                        <label class="control-label"><strong>Mot à rechercher</strong></label>
+                        <input type="text" name="motcle" class="form-control text-center">
+                        <button type="submit" class="form-control btn btn-primary">Chercher</button>
+                    </div>
+                </form>
+                <table class="table table-striped">
+                    <tr>
+                        <th>Code</th>
+                        <th>Nom</th>
+                        <th>Raison sociale</th>
+                        <th>Email</th>
+                        <th colspan="2">Actions</th>
+                    </tr>
+                    <tr th:each="e:${listeEntreprises}">
+                        <td th:text="${e.code}"></td>
+                        <td th:text="${e.nom}"></td>
+                        <td th:text="${e.raisonSociale}"></td>
+                        <td th:text="${e.email}"></td>
+                        <td><a th:href="@{/taxes(code=${e.code})}">Afficher ses taxes</a></td>
+                        <td>
+                            <button class="btn btn-info">Modifier</button>
+                        </td>
+                        <td>
+                            <button class="btn btn-danger">Supprimer</button>
+                        </td>
+                    </tr>
+                </table>
+               <div>
+                    <ul class="nav nav-pills">
+                        <li th:class="${status.index == pageCourante}? 'active': ''" th:each="p,status:${pages}">
+                            <a th:href="@{/entreprises(page=${status.index},motcle=${motcle})}" th:text="${status.index+1}"></a>
+                        </li>
+                        <li>
+                            <a th:href="@{/entreprises}">Toutes les entreprises</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
